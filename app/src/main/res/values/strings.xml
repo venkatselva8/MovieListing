@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Movie Listing</string>
+    <string name="search">Search</string>
+    <string name="toolbar_title">Romantic Comedy</string>
+    <string name="search_hint">Search Movie</string>
+</resources>

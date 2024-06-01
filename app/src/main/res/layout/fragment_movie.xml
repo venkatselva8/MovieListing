@@ -1,0 +1,25 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.ListingFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="app.android.movielisting.viewmodel.MovieViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/recycler_view_margin"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+</layout>

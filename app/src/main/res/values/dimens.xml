@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="poster_gap">8dp</dimen>
+    <dimen name="poster_title_gap">8dp</dimen>
+    <dimen name="title_text">16sp</dimen>
+    <dimen name="poster_height">180dp</dimen>
+    <dimen name="grid_item_spacing">8dp</dimen>
+    <dimen name="recycler_view_margin">16dp</dimen>
+</resources>

@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.MovieListing" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_dark_color</item>
+        <item name="android:fontFamily">@font/titillium_web_light</item>
+    </style>
+
+    <style name="ItemPosterTitle">
+        <item name="android:textSize">@dimen/title_text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ItemPoster">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:background">@drawable/placeholder_for_missing_posters</item>
+    </style>
+
+    <style name="Theme.MovieListing" parent="Base.Theme.MovieListing">
+        <item name="android:statusBarColor">@color/primary_color</item>
+    </style>
+</resources>

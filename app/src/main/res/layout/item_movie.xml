@@ -1,0 +1,44 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movie"
+            type="app.android.movielisting.data.model.Movie" />
+        <variable
+            name="query"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/grid_item_spacing"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/moviePoster"
+            style="@style/ItemPoster"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/poster_height"
+            android:importantForAccessibility="no"
+            app:imageUrl="@{movie.posterImage}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/movieTitle"
+            style="@style/ItemPosterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/poster_title_gap"
+            android:layout_marginBottom="@dimen/poster_title_gap"
+            app:highlightedText="@{movie.name}"
+            app:searchQuery="@{query}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/moviePoster"
+            app:layout_constraintTop_toBottomOf="@id/moviePoster" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
