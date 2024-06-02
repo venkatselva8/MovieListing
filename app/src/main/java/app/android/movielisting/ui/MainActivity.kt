@@ -13,6 +13,9 @@ import app.android.movielisting.ui.fragment.SearchFragment
 import app.android.movielisting.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+/**
+ * Main activity that hosts ListingFragment and SearchFragment.
+ */
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MovieViewModel by viewModel()
@@ -24,9 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.toolbar_title)
-        setSupportActionBar(toolbar)
+        setupToolbar()
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -35,32 +36,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.title = getString(R.string.toolbar_title)
+        setSupportActionBar(toolbar)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         searchMenuItem = menu.findItem(R.id.action_search)
+        setupSearchView()
+        return true
+    }
+
+    //To search the movie
+    private fun setupSearchView() {
         searchView = searchMenuItem.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null && newText.length >= 3) {
-                    viewModel.searchMovies(newText)
-                    if (supportFragmentManager.findFragmentByTag(searchFragmentTag) == null) {
-                        supportFragmentManager.commit {
-                            replace(
-                                R.id.fragment_container,
-                                SearchFragment(),
-                                searchFragmentTag
-                            )
-                            addToBackStack(null)
-                        }
+                newText?.let {
+                    if (it.length >= 3) {
+                        viewModel.searchMovies(it)
+                        showSearchFragment()
+                    } else {
+                        supportFragmentManager.popBackStack()
                     }
-                } else {
-                    supportFragmentManager.popBackStack()
                 }
                 return true
             }
@@ -72,20 +76,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                return true
-            }
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean = true
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 resetToolbar()
                 return true
             }
         })
-
-        return true
     }
 
-    fun resetToolbar() {
+    private fun showSearchFragment() {
+        if (supportFragmentManager.findFragmentByTag(searchFragmentTag) == null) {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container, SearchFragment(), searchFragmentTag)
+                addToBackStack(null)
+            }
+        }
+    }
+
+    private fun resetToolbar() {
         supportActionBar?.title = getString(R.string.toolbar_title)
         invalidateOptionsMenu()
         supportFragmentManager.popBackStack()

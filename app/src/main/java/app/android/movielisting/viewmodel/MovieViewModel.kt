@@ -25,10 +25,11 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     private var isLastPage = false
 
     /**
-     * Fetch movies for the current page.
+     * Fetch movies on start
      * @param context The context to access the repository.
      */
     fun fetchMovies(context: Context) {
+        //Reset the data if exists
         currentPage = 1
         isLastPage = false
         allMovies.clear()
@@ -39,6 +40,10 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
         currentPage++
     }
 
+    /**
+     * Fetch movies on pagination
+     * @param context The context to access the repository.
+     */
     fun fetchMoviesOnPaginate(context:Context){
         if (isLastPage) return
         val newMovies = repository.getMovies(context, currentPage)
@@ -63,4 +68,5 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
             _searchResults.value = SearchResults(query, filteredMovies)
         }
     }
+
 }

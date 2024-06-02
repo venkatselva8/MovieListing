@@ -11,11 +11,14 @@ import app.android.movielisting.databinding.FragmentMovieBinding
 import app.android.movielisting.ui.adapter.MovieAdapter
 import app.android.movielisting.utils.ResponsiveGridLayoutManager
 import app.android.movielisting.viewmodel.MovieViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
+/**
+ * Fragment to display search results.
+ */
 class SearchFragment : Fragment() {
 
-    private val viewModel: MovieViewModel by sharedViewModel()
+    private val viewModel: MovieViewModel by activityViewModel<MovieViewModel>()
     private lateinit var binding: FragmentMovieBinding
     private lateinit var adapter: MovieAdapter
 
@@ -32,12 +35,16 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MovieAdapter(mutableListOf())
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = ResponsiveGridLayoutManager(requireContext())
+        setupRecyclerView()
 
         viewModel.searchResults.observe(viewLifecycleOwner) { searchResults ->
             adapter.updateMoviesOnSearch(searchResults)
         }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = MovieAdapter(mutableListOf())
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = ResponsiveGridLayoutManager(requireContext())
     }
 }
