@@ -1,3 +1,3 @@
 package app.android.movielisting.data.model
 
-data class SearchResults(val query: String, val movies: List<Movie>)
+data class SearchResults(val query: String, val movies: List<Movie>, val message: String? = null)

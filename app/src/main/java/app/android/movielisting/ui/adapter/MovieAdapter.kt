@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.android.movielisting.R
-import app.android.movielisting.databinding.ItemMovieBinding
 import app.android.movielisting.data.model.Movie
 import app.android.movielisting.data.model.SearchResults
+import app.android.movielisting.databinding.ItemMovieBinding
 
 class MovieAdapter(private var movies: MutableList<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -15,7 +15,7 @@ class MovieAdapter(private var movies: MutableList<Movie>) :
     private var searchQuery: String = ""
 
     fun updateMovies(newMovies: List<Movie>) {
-        val currentSize= movies.size
+        val currentSize = movies.size
         movies.addAll(newMovies)
         notifyItemRangeInserted(currentSize, newMovies.size)
     }
@@ -24,12 +24,13 @@ class MovieAdapter(private var movies: MutableList<Movie>) :
         movies.clear()
         searchQuery = searchResults.query
         movies.addAll(searchResults.movies)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, searchResults.movies.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = DataBindingUtil.inflate<ItemMovieBinding>(inflater, R.layout.item_movie, parent, false)
+        val binding =
+            DataBindingUtil.inflate<ItemMovieBinding>(inflater, R.layout.item_movie, parent, false)
         return MovieViewHolder(binding)
     }
 
@@ -40,7 +41,8 @@ class MovieAdapter(private var movies: MutableList<Movie>) :
 
     override fun getItemCount(): Int = movies.size
 
-    class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(private val binding: ItemMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie, query: String) {
             binding.movie = movie
             binding.query = query

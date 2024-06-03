@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.android.movielisting.R
 import app.android.movielisting.data.model.Movie
 import app.android.movielisting.data.model.SearchResults
 import app.android.movielisting.data.repository.MovieRepository
@@ -29,30 +30,22 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
      * @param context The context to access the repository.
      */
     fun fetchMovies(context: Context) {
-        //Reset the data if exists
-        currentPage = 1
-        isLastPage = false
-        allMovies.clear()
-
+        resetData()
         val newMovies = repository.getMovies(context, currentPage)
-        allMovies.addAll(newMovies)
-        _movies.value = newMovies.toMutableList()
-        currentPage++
+        addMovies(newMovies)
     }
 
     /**
      * Fetch movies on pagination
      * @param context The context to access the repository.
      */
-    fun fetchMoviesOnPaginate(context:Context){
+    fun fetchMoviesOnPaginate(context: Context) {
         if (isLastPage) return
         val newMovies = repository.getMovies(context, currentPage)
         if (newMovies.isEmpty()) {
             isLastPage = true
         } else {
-            allMovies.addAll(newMovies)
-            _movies.value = newMovies.toMutableList()
-            currentPage++
+            addMovies(newMovies)
         }
     }
 
@@ -60,13 +53,50 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
      * Search movies by the query.
      * @param query The search query.
      */
-    fun searchMovies(query: String) {
+    fun searchMovies(context: Context, query: String) {
         if (query.length >= 3) {
             val filteredMovies = allMovies.filter {
                 it.name.contains(query, ignoreCase = true)
             }
-            _searchResults.value = SearchResults(query, filteredMovies)
+            if (filteredMovies.isEmpty()) {
+                _searchResults.value = getSearchResultsByMessage(
+                    context.getString(
+                        R.string.no_movies_available,
+                        query
+                    )
+                )
+            } else {
+                _searchResults.value = SearchResults(query, filteredMovies)
+            }
+        } else {
+            _searchResults.value = getSearchResultsByMessage(
+                context.getString(R.string.search_minimum_characters)
+            )
         }
     }
 
+    /**
+     * Reset the data for a fresh fetch.
+     */
+    private fun resetData() {
+        currentPage = 1
+        isLastPage = false
+        allMovies.clear()
+    }
+
+    /**
+     * Add movies to the list and update the LiveData.
+     * @param newMovies The list of new movies to add.
+     */
+    private fun addMovies(newMovies: List<Movie>) {
+        allMovies.addAll(newMovies)
+        _movies.value = newMovies.toMutableList()
+        currentPage++
+    }
+
+    private fun getSearchResultsByMessage(searchMessage: String): SearchResults {
+        return SearchResults(
+            "", listOf(), searchMessage
+        )
+    }
 }

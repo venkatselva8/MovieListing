@@ -35,7 +35,7 @@ object Utils {
         "poster9.jpg" to R.drawable.poster9
     )
 
-    fun getMoviePosterResourceId(posterImage: String): Int {
+    fun getMoviePosterResourceId(posterImage: String?): Int {
         return posterImageMap[posterImage] ?: R.drawable.placeholder_for_missing_posters
     }
 }

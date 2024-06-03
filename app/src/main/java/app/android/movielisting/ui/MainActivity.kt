@@ -59,12 +59,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                    if (it.length >= 3) {
-                        viewModel.searchMovies(it)
-                        showSearchFragment()
-                    } else {
-                        supportFragmentManager.popBackStack()
-                    }
+                    viewModel.searchMovies(this@MainActivity, it)
+                    showSearchFragment()
                 }
                 return true
             }

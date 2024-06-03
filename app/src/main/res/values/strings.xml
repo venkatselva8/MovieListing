@@ -3,4 +3,7 @@
     <string name="search">Search</string>
     <string name="toolbar_title">Romantic Comedy</string>
     <string name="search_hint">Search Movie</string>
+    <string name="search_minimum_characters">Please enter at least 3 characters to search for movies</string>
+    <string name="no_movies_available">No movies available for &quot;%1$s&quot;</string>
+    <string name="common_error_message">Something went wrong, try again later</string>
 </resources>
