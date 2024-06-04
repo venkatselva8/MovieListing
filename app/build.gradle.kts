@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -73,6 +74,9 @@ dependencies {
     // JSON Parsing
     implementation("com.squareup.moshi:moshi:1.14.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+
+    // Firebase 
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
 
     // Unit Testing & UI testing
     testImplementation("io.mockk:mockk:1.13.2")

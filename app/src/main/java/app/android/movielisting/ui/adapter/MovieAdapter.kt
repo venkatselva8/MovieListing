@@ -24,7 +24,7 @@ class MovieAdapter(private var movies: MutableList<Movie>) :
         movies.clear()
         searchQuery = searchResults.query
         movies.addAll(searchResults.movies)
-        notifyItemRangeChanged(0, searchResults.movies.size)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
