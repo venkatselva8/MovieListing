@@ -1,6 +1,8 @@
 # MovieListingApp
 The MovieListingApp is an Android application project that showcases modern development practices and my developmental skills. Built using Kotlin, MVVM architecture, and dependency injection, the app features robust UI and unit testing. The project uses a local JSON file stored in the assets folder as its data source, enabling functionalities such as listing movies with pagination and search. Leveraging the latest Android development tools and practices, this app ensures a robust and maintainable codebase.
 
+[AppVideo.webm](https://github.com/venkatselva8/MovieListing/assets/15832831/cd3c475f-6574-42ec-a4b5-54f7d606ca68)
+
 ## Table of Contents
 - [Technologies Used](#technologies-used)
 - [Project Architecture](#project-architecture)
